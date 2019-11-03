@@ -6,3 +6,78 @@ Medium green: #55c57a
 Dark green: #28b485
 
 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  
+  /* paddingは継承されない */
+  padding: 30px;
+}
+
+.header {
+  height: 95vh;
+  position: relative;
+
+  background-image: 
+    linear-gradient(
+      to right bottom,
+    hsla(111, 55%, 64%, 0.8), hsla(160, 64%, 43%, 0.8)
+    ),
+    url(../img/hero.jpg);
+
+  background-size: cover;
+  background-position: top;
+
+  /* 斜めに切り取るために4点の座標を指定 */
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.logo-box {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.logo {
+  /* 画像の大きさを指定 */
+  /* 横の長さは指定できるが通常は指定しない（ブラウザが自動的に計算してくれる） */
+  height: 35px;
+}
+
+/* 上下左右の中央に持ってくるためのイディオムのようなもの */
+.text-box {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.heading-primary-main {
+  display: block;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 35px;
+
+}
+
+.heading-primary-sub {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 17.5px;
+}
