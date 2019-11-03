@@ -60,6 +60,10 @@ body {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  /* 子要素の開始位置を指定 */
+  /* line-blockのbtn要素も真ん中になる */
+  text-align: center;
 }
 
 .heading-primary {
@@ -70,6 +74,8 @@ body {
   子要素がアニメーションの際に意図しないブレを起こる場合があり、それを補正するためのハック
   */
   backface-visibility: hidden;
+
+  margin: 60px;
 }
 
 .heading-primary-main {
@@ -130,4 +136,57 @@ body {
     opacity: 1;
     transform: translate(0);
   }
+}
+
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+
+  /* 
+  ・display: blockの場合はいっぱいに要素が広がってしまうのでinline-blockかinlineを使う
+  ・inlineの場合は上下のmarginはつけることはできない。また上下のpaddingをつけると他の要素と重なってしまう。
+  上記より、要素幅を横いっぱいに広げたくないボタンかつpaddingを付けたいので、display: inline-block;とする
+  ※他にもinline-blockには要素が横に並ぶなどの特徴がある。
+  https://saruwakakun.com/html-css/basic/display#section2
+  */
+  display: inline-block;
+  padding: 15px 40px;
+
+
+  border-radius: 100px;
+
+  /* 
+  順不同で下記の4点を指定できる
+  ・transition-duration：アニメーションにかかる時間
+  ・transition-property：アニメーションさせるプロパティ
+  ・transition-timing-function：アニメーションの変化の仕方
+  ・transition-delay：アニメーション開始の遅れ時間
+  ※時間に関するものは順番が関係あり。
+  全てのプロパティのアニメーションを許可する場合は下記のようにallとする
+  */
+  transition: all .2s
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  /*
+  box-shadow X方向の距離 Y方向の距離 ぼかし距離 影の色
+  「ぼかし距離」は小さい(近い)ほどはっきり見える
+  */
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+/* btnがクリックされている状態の場合はhoverしている時よりも、相対的に2px下に移動する */
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+
+
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
 }
