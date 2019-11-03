@@ -165,7 +165,12 @@ body {
   ※時間に関するものは順番が関係あり。
   全てのプロパティのアニメーションを許可する場合は下記のようにallとする
   */
-  transition: all .2s
+  transition: all .2s;
+
+  /* 
+  擬似要素内でposition:absolute;を使うのでrelativeにする
+   */
+  position: relative;
 }
 
 .btn:hover {
@@ -183,10 +188,45 @@ body {
   box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
-
-
-
 .btn-white {
   background-color: #fff;
   color: #777;
 }
+
+
+/* ボタンがシュリンってなるエフェクト */
+/* 
+NOTE:
+・before,afterなどの擬似要素の親要素は元々の要素の扱いになるので、width,heightは100%
+・ここでは元々の要素を基準にposition:absolute;を使いたいので、元々の要素をrelativeにすることを忘れない。
+・transition: all .4;　-> .4ではなく、.4sとする
+*/
+
+.btn::after {
+  /* 元々の要素とデザインが同じになるように諸々設定する */
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 元々の要素を隠さないようにする */
+  z-index: -1;
+
+  /* 擬似要素にアニメーションをつける時も他と同様に、初期状態の方にtransitionプロパティを設定する */
+  transition: all .4s;
+}
+
+.btn-white::after {
+  background-color: #fff;
+}
+
+/* 変化後の状態 */
+.btn:hover::after {
+  transform: scale(1.5);
+  opacity: 0;
+}
+
+/* end: ボタンがシュリンってなるエフェクト */
