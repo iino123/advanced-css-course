@@ -1,0 +1,56 @@
+.row {
+  max-width: $grid-width;
+  background-color: #eee;
+  // block要素内にblock要素を中央寄せする際のイディオム
+  margin: 0 auto;
+
+  &:not(:last-child) {
+    margin-bottom: $gutter-vertiacal;
+  }
+
+  // 基本:子要素をfloatさせたら、その親要素の::afterにclearfixを定義しないと高さが認識されない
+  @include clearfix;
+
+  /*
+  [属性名 演算子 値]の構文。演算子には下記のようなものがある。
+  ・ ^= -> 最初の文字
+  ・ *= -> 含む
+  ・ $= -> 最後の文字 
+  今回は「class名がcol-から始まるもの」を意味する
+  */
+  [class^="col-"] {
+    background-color: orangered;
+    float: left;
+    &:not(:last-child) {
+      margin-right: $gutter-horizontal;
+    }
+  }
+
+  .col-1-of-2 {
+    width: calc((100% - #{$gutter-horizontal}) / 2);
+  }
+
+  .col-1-of-3 {
+    width: calc((100% - 2 *#{$gutter-horizontal}) / 3);
+  }
+
+  // col-1-of-3の幅 + 空白の幅
+  .col-2-of-3 {
+    width: calc(
+      (100% - 2 * #{$gutter-horizontal}) / 3 * 2 + #{$gutter-horizontal}
+    );
+  }
+  .col-1-of-4 {
+    width: calc((100% - 3 * #{$gutter-horizontal}) / 4);
+  }
+  .col-2-of-4 {
+    width: calc(
+      (100% - 3 * #{$gutter-horizontal}) / 4 * 2 + #{$gutter-horizontal}
+    );
+  }
+  .col-3-of-4 {
+    width: calc(
+      (100% - 3 * #{$gutter-horizontal}) / 4 * 3 + 2 *#{$gutter-horizontal}
+    );
+  }
+}

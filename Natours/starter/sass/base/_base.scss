@@ -1,0 +1,20 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* ユニバーサルセレクタではinheridにしてbodyでborder-boxを指定する方が微妙に拡張性が高いらしい */
+  box-sizing: inherit;
+}
+
+html {
+  /* remをわかりやすく使用するためのテクニック */
+  // これは1remを定義しているので、typographyではなくbaseに当たると判断
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  /* paddingは継承されない */
+  padding: 3rem;
+}
