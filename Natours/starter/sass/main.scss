@@ -3,6 +3,7 @@ $color-primary-light: #55c57a;
 $color-primary-dark: #28b485;
 $color-grey-dark: #777;
 $color-white: #fff;
+$color-black: #000;
 
 *,
 *::after,
@@ -46,69 +47,66 @@ body {
 
   /* 斜めに切り取るために4点の座標を指定 */
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-}
 
-.header__logo-box {
-  position: absolute;
-  top: 4rem;
-  left: 4rem;
-}
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
 
-.header__logo {
-  /* 画像の大きさを指定 */
-  /* 横の長さは指定できるが通常は指定しない（ブラウザが自動的に計算してくれる） */
-  height: 3.5rem;
-}
+  &__logo {
+    /* 画像の大きさを指定 */
+    /* 横の長さは指定できるが通常は指定しない（ブラウザが自動的に計算してくれる） */
+    height: 3.5rem;
+  }
 
-/* 上下左右の中央に持ってくるためのイディオムのようなもの */
-.header__text-box {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* 上下左右の中央に持ってくるためのイディオムのようなもの */
+  &__text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-  /* 子要素の開始位置を指定 */
-  /* line-blockのbtn要素も真ん中になる */
-  text-align: center;
+    /* 子要素の開始位置を指定 */
+    /* line-blockのbtn要素も真ん中になる */
+    text-align: center;
+  }
 }
 
 .heading-primary {
   color: $color-white;
   text-transform: uppercase;
-
   /*
   子要素がアニメーションの際に意図しないブレを起こる場合があり、それを補正するためのハック
   */
   backface-visibility: hidden;
-
   margin: 6rem;
-}
+  &--main {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
 
-.heading-primary--main {
-  display: block;
-  font-size: 6rem;
-  font-weight: 400;
-  letter-spacing: 3.5rem;
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    /* animation-delay: 1s; */
+  }
 
-  animation-name: moveInLeft;
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  /* animation-delay: 1s; */
-}
+  &--sub {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
 
-.heading-primary--sub {
-  display: block;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 1.75rem;
-
-  /* 
-  animation-name: moveInRight;
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  */
-  /* animationは下記のように省略して書ける */
-  animation: moveInRight 1s ease-out;
+    /* 
+    animation-name: moveInRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    */
+    /* animationは下記のように省略して書ける */
+    animation: moveInRight 1s ease-out;
+  }
 }
 
 @keyframes moveInLeft {
@@ -155,102 +153,102 @@ body {
   }
 }
 
-.btn:link,
-.btn:visited {
-  font-size: 1.6rem;
-  text-transform: uppercase;
-  text-decoration: none;
+// :linkはまだ見てない時、:visitedは1回見た後
+.btn {
+  &:link,
+  &:visited {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    /* 
+    ・display: blockの場合はいっぱいに要素が広がってしまうのでinline-blockかinlineを使う
+    ・inlineの場合は上下のmarginはつけることはできない。また上下のpaddingをつけると他の要素と重なってしまう。
+    上記より、要素幅を横いっぱいに広げたくないボタンかつpaddingを付けたいので、display: inline-block;とする
+    ※他にもinline-blockには要素が横に並ぶなどの特徴がある。
+    https://saruwakakun.com/html-css/basic/display#section2
+    */
+    display: inline-block;
+    padding: 1.5rem 4rem;
+    border-radius: 10rem;
+    /* 
+    順不同で下記の4点を指定できる
+    ・transition-duration：アニメーションにかかる時間
+    ・transition-property：アニメーションさせるプロパティ
+    ・transition-timing-function：アニメーションの変化の仕方
+    ・transition-delay：アニメーション開始の遅れ時間
+    ※時間に関するものは順番が関係あり。
+    全てのプロパティのアニメーションを許可する場合は下記のようにallとする
+    */
+    transition: all 0.2s;
+    /* 
+    擬似要素内でposition:absolute;を使うのでrelativeにする
+    */
+    position: relative;
+  }
 
+  &:hover {
+    transform: translateY(-0.3rem);
+    /*
+    box-shadow X方向の距離 Y方向の距離 ぼかし距離 影の色
+    「ぼかし距離」は小さい(近い)ほどはっきり見える
+    */
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+
+    /* ボタンがシュリンってなるエフェクトの変化後の状態 */
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+
+  /* btnがクリックされている状態の場合はhoverしている時よりも、相対的に2px下に移動する */
+  &:active {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+  }
+
+  &--white {
+    background-color: $color-white;
+    color: $color-grey-dark;
+
+    // これは下の&::afterの設定に含めても良いが、今回は色に関連するプロパティはこのクラスで指定する
+    &::after {
+      background-color: $color-white;
+    }
+  }
+
+  /* ボタンがシュリンってなるエフェクトの初期状態 */
   /* 
-  ・display: blockの場合はいっぱいに要素が広がってしまうのでinline-blockかinlineを使う
-  ・inlineの場合は上下のmarginはつけることはできない。また上下のpaddingをつけると他の要素と重なってしまう。
-  上記より、要素幅を横いっぱいに広げたくないボタンかつpaddingを付けたいので、display: inline-block;とする
-  ※他にもinline-blockには要素が横に並ぶなどの特徴がある。
-  https://saruwakakun.com/html-css/basic/display#section2
+  NOTE:
+  ・before,afterなどの擬似要素の親要素は元々の要素の扱いになるので、width,heightは100%
+  ・ここでは元々の要素を基準にposition:absolute;を使いたいので、元々の要素をrelativeにすることを忘れない。
+  ・transition: all .4;　-> .4ではなく、.4sとする
   */
-  display: inline-block;
-  padding: 1.5rem 4rem;
+  &::after {
+    /* 元々の要素とデザインが同じになるように諸々設定する */
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* 元々の要素を隠さないようにする */
+    z-index: -1;
 
-  border-radius: 10rem;
+    /* 擬似要素にアニメーションをつける時も他と同様に、初期状態の方にtransitionプロパティを設定する */
+    // これはこの要素がhoverする時に発動する
+    transition: all 0.4s;
+  }
+  /* end: ボタンがシュリンってなるエフェクト */
 
-  /* 
-  順不同で下記の4点を指定できる
-  ・transition-duration：アニメーションにかかる時間
-  ・transition-property：アニメーションさせるプロパティ
-  ・transition-timing-function：アニメーションの変化の仕方
-  ・transition-delay：アニメーション開始の遅れ時間
-  ※時間に関するものは順番が関係あり。
-  全てのプロパティのアニメーションを許可する場合は下記のようにallとする
-  */
-  transition: all 0.2s;
+  // ボタン出現時のエフェクト
+  &--animated {
+    /* 最後のプロパティはamimation-delay */
+    animation: moveInBottom 0.5s ease-out 0.75s;
 
-  /* 
-  擬似要素内でposition:absolute;を使うのでrelativeにする
-   */
-  position: relative;
-}
-
-.btn:hover {
-  transform: translateY(-0.3rem);
-  /*
-  box-shadow X方向の距離 Y方向の距離 ぼかし距離 影の色
-  「ぼかし距離」は小さい(近い)ほどはっきり見える
-  */
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-}
-
-/* btnがクリックされている状態の場合はhoverしている時よりも、相対的に2px下に移動する */
-.btn:active {
-  transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-}
-
-.btn--white {
-  background-color: $color-white;
-  color: $color-grey-dark;
-}
-
-/* ボタンがシュリンってなるエフェクト */
-/* 
-NOTE:
-・before,afterなどの擬似要素の親要素は元々の要素の扱いになるので、width,heightは100%
-・ここでは元々の要素を基準にposition:absolute;を使いたいので、元々の要素をrelativeにすることを忘れない。
-・transition: all .4;　-> .4ではなく、.4sとする
-*/
-
-.btn::after {
-  /* 元々の要素とデザインが同じになるように諸々設定する */
-  content: "";
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  border-radius: 10rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* 元々の要素を隠さないようにする */
-  z-index: -1;
-
-  /* 擬似要素にアニメーションをつける時も他と同様に、初期状態の方にtransitionプロパティを設定する */
-  transition: all 0.4s;
-}
-
-.btn--white::after {
-  background-color: $color-white;
-}
-
-/* 変化後の状態 */
-.btn:hover::after {
-  transform: scaleX(1.4) scaleY(1.6);
-  opacity: 0;
-}
-
-/* end: ボタンがシュリンってなるエフェクト */
-
-.btn--animated {
-  /* 最後のプロパティはamimation-delay */
-  animation: moveInBottom 0.5s ease-out 0.75s;
-
-  /* このプロパティを指定することでkeyflameの0%の状態のcssがアニメーションが始まるまで適応される*/
-  animation-fill-mode: backwards;
+    /* このプロパティを指定することでkeyflameの0%の状態のcssがアニメーションが始まるまで適応される*/
+    animation-fill-mode: backwards;
+  }
 }
