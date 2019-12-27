@@ -7,31 +7,40 @@ Dark green: #28b485
 
 */
 
-* {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
-  box-sizing: border-box
+  /* ユニバーサルセレクタではinheridにしてbodyでborder-boxを指定する方が微妙に拡張性が高いらしい */
+  box-sizing: inherit;
+}
+
+html {
+  /* remをわかりやすく使用するためのテクニック */
+  font-size: 62.5%;
 }
 
 body {
+  box-sizing: border-box;
   font-family: "Lato", sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  /* font-size: 16px; */
   line-height: 1.7;
   color: #777;
-  
+
   /* paddingは継承されない */
-  padding: 30px;
+  padding: 3rem;
 }
 
 .header {
   height: 95vh;
   position: relative;
 
-  background-image: 
-    linear-gradient(
+  background-image: linear-gradient(
       to right bottom,
-    hsla(111, 55%, 64%, 0.8), hsla(160, 64%, 43%, 0.8)
+      hsla(111, 55%, 64%, 0.8),
+      hsla(160, 64%, 43%, 0.8)
     ),
     url(../img/hero.jpg);
 
@@ -44,14 +53,14 @@ body {
 
 .logo-box {
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 4rem;
+  left: 4rem;
 }
 
 .logo {
   /* 画像の大きさを指定 */
   /* 横の長さは指定できるが通常は指定しない（ブラウザが自動的に計算してくれる） */
-  height: 35px;
+  height: 3.5rem;
 }
 
 /* 上下左右の中央に持ってくるためのイディオムのようなもの */
@@ -75,14 +84,14 @@ body {
   */
   backface-visibility: hidden;
 
-  margin: 60px;
+  margin: 6rem;
 }
 
 .heading-primary-main {
   display: block;
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 400;
-  letter-spacing: 35px;
+  letter-spacing: 3.5rem;
 
   animation-name: moveInLeft;
   animation-duration: 1s;
@@ -92,9 +101,9 @@ body {
 
 .heading-primary-sub {
   display: block;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: 17.5px;
+  letter-spacing: 1.75rem;
 
   /* 
   animation-name: moveInRight;
@@ -103,17 +112,16 @@ body {
   */
   /* animationは下記のように省略して書ける */
   animation: moveInRight 1s ease-out;
-  
 }
 
 @keyframes moveInLeft {
   0% {
     opacity: 0;
-    transform: translateX(-100px);
+    transform: translateX(-1rem);
   }
 
   80% {
-    transform: translateX(10px);
+    transform: translateX(1rem);
   }
 
   100% {
@@ -125,11 +133,23 @@ body {
 @keyframes moveInRight {
   0% {
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateX(10rem);
   }
 
   80% {
-    transform: translateX(-10px);
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
   }
 
   100% {
@@ -140,6 +160,7 @@ body {
 
 .btn:link,
 .btn:visited {
+  font-size: 1.6rem;
   text-transform: uppercase;
   text-decoration: none;
 
@@ -151,10 +172,9 @@ body {
   https://saruwakakun.com/html-css/basic/display#section2
   */
   display: inline-block;
-  padding: 15px 40px;
+  padding: 1.5rem 4rem;
 
-
-  border-radius: 100px;
+  border-radius: 10rem;
 
   /* 
   順不同で下記の4点を指定できる
@@ -165,7 +185,7 @@ body {
   ※時間に関するものは順番が関係あり。
   全てのプロパティのアニメーションを許可する場合は下記のようにallとする
   */
-  transition: all .2s;
+  transition: all 0.2s;
 
   /* 
   擬似要素内でposition:absolute;を使うのでrelativeにする
@@ -174,25 +194,24 @@ body {
 }
 
 .btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-0.3rem);
   /*
   box-shadow X方向の距離 Y方向の距離 ぼかし距離 影の色
   「ぼかし距離」は小さい(近い)ほどはっきり見える
   */
-  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 
 /* btnがクリックされている状態の場合はhoverしている時よりも、相対的に2px下に移動する */
 .btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .btn-white {
   background-color: #fff;
   color: #777;
 }
-
 
 /* ボタンがシュリンってなるエフェクト */
 /* 
@@ -208,7 +227,7 @@ NOTE:
   display: inline-block;
   height: 100%;
   width: 100%;
-  border-radius: 100px;
+  border-radius: 10rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -216,7 +235,7 @@ NOTE:
   z-index: -1;
 
   /* 擬似要素にアニメーションをつける時も他と同様に、初期状態の方にtransitionプロパティを設定する */
-  transition: all .4s;
+  transition: all 0.4s;
 }
 
 .btn-white::after {
@@ -225,8 +244,16 @@ NOTE:
 
 /* 変化後の状態 */
 .btn:hover::after {
-  transform: scale(1.5);
+  transform: scaleX(1.4) scaleY(1.6);
   opacity: 0;
 }
 
 /* end: ボタンがシュリンってなるエフェクト */
+
+.btn-animated {
+  /* 最後のプロパティはamimation-delay */
+  animation: moveInBottom 0.5s ease-out 0.75s;
+
+  /* このプロパティを指定することでkeyflameの0%の状態のcssがアニメーションが始まるまで適応される*/
+  animation-fill-mode: backwards;
+}
