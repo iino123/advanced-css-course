@@ -1,0 +1,8 @@
+.section-about {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0;
+
+  // これにより、headerとの隙間の三角の部分に背景色が付かない不具合を解消する
+  // headerのheightとclip-pathの記述から-20vhという数値を導く
+  margin-top: -20vh;
+}

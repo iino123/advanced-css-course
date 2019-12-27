@@ -1,6 +1,6 @@
 .row {
   max-width: $grid-width;
-  background-color: #eee;
+  // background-color: #eee;
   // block要素内にblock要素を中央寄せする際のイディオム
   margin: 0 auto;
 
@@ -19,7 +19,7 @@
   今回は「class名がcol-から始まるもの」を意味する
   */
   [class^="col-"] {
-    background-color: orangered;
+    // background-color: orangered;
     float: left;
     &:not(:last-child) {
       margin-right: $gutter-horizontal;
