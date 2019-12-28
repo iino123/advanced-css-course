@@ -1,0 +1,35 @@
+.feature-box {
+  background-color: rgba($color-white, 0.8);
+  padding: 2.5rem;
+  // text-alignプロパティは子要素に継承される(当然font-sizeも)
+  text-align: center;
+  font-size: 1.5rem;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+  // hover時のアニメーションのため
+  transition: transform 0.3s;
+
+  &__icon {
+    font-size: 6rem;
+    // htmlのiタグはインライン要素なので、上下のpaddingやmarginをつけることができない。
+    // inline-blockによってそれを回避する
+    display: inline-block;
+    margin-bottom: 2rem;
+
+    // start テキスト色のグラデーション
+    background-image: linear-gradient(
+      to right,
+      $color-primary-light,
+      $color-primary-dark
+    );
+    // Q:なぜ-webkitが必要か
+    // 背景色をテキストの部分のみに適応する
+    -webkit-background-clip: text;
+    // 文字自体を透明にすることで背景に設定した色を反映させる
+    color: transparent;
+    // end テキスト色のグラデーションさせる
+  }
+  &:hover {
+    transform: scale(1.03) translateY(-1.5rem);
+  }
+}

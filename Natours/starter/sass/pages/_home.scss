@@ -6,3 +6,37 @@
   // headerのheightとclip-pathの記述から-20vhという数値を導く
   margin-top: -20vh;
 }
+
+.section-features {
+  padding: 20rem 0;
+
+  // tranformで歪ませたところに余白ができるので上に移動させて調整
+  margin-top: -10rem;
+
+  // 透明度も指定したいのでrgbaの形式で色を渡す
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/nat-4.jpg);
+  background-size: cover;
+
+  // 全体を歪ませる
+  transform: skewY(-7deg);
+  // .section-features > *
+  // 子要素の歪みを元に戻す
+  & > * {
+    transform: skewY(7deg);
+  }
+}
+// 補足(基礎)
+// .section-feature * ---> .section-fetaureの全ての子要素(孫要素なども含む)
+// .section-feature > * ---> .section-featureの直接の子要素(孫要素は含まない)
+
+.section-tours {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0 50rem 0;
+  // 上のsectionが歪んでいる分の調整
+  margin-top: -10rem;
+}

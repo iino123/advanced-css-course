@@ -1,0 +1,73 @@
+.card {
+  // transform: rotateで回転させる時に立体的に見せる
+  perspective: 150rem;
+  position: relative;
+
+  // 唯一の子要素をposition:absoluteにしているので、親要素が高さを認識できない
+  // これの指定がないと右隣の要素が重なってしまう -> 子要素と同じheightを指定
+  height: 50rem;
+
+  // ここを理解するためにはhtmlのマークアップを十分に頭に入れておく
+  &__side {
+    // background-color: orangered;
+    color: $color-white;
+    font-size: 2rem;
+    height: 50rem;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+    // transitionプロパティは継承される
+    transition: transform 0.8s;
+    // widthは親要素いっぱいに広がる
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    // rotateなどで回転させる時に正面にあるもの以外を表示しなくするプロパティ
+    backface-visibility: hidden;
+    &--front {
+      background-color: $color-white;
+    }
+    &--back {
+      // -180degで裏面を向いているため、backface-visibility: hidden;によって見えなくなる
+      // --frontでは 0deg -> 180deg と変化するので+180している。したがって--backでも正の方向へ変化させる必要がある。よって180degではなく、-180degが初期値となる。
+      transform: rotateY(-180deg);
+
+      // グラデーションの背景をしたい時は画像を使っていなくてもbackground-imageを使用する
+      // ちなみに画像を使用する時はlinear-gradientの第４引数に画像のpathを渡す
+      &--1 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        );
+      }
+
+      &--2 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        );
+      }
+
+      &--3 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        );
+      }
+    }
+  }
+
+  // card:hover .card__side <-- .card:hoverの子(孫)要素の.card__sideにプロパティの影響を与える
+  &:hover &__side--front {
+    transform: rotateY(180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
+}
