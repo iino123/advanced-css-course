@@ -5,15 +5,17 @@
 
   // 唯一の子要素をposition:absoluteにしているので、親要素が高さを認識できない
   // これの指定がないと右隣の要素が重なってしまう -> 子要素と同じheightを指定
-  height: 50rem;
+  height: 52rem;
 
+  // FUNCTINARITY
   // ここを理解するためにはhtmlのマークアップを十分に頭に入れておく
   &__side {
-    // background-color: orangered;
-    color: $color-white;
     font-size: 2rem;
-    height: 50rem;
-    border-radius: 3px;
+    height: 52rem;
+    border-radius: 5px;
+    // overflowは子要素が親要素に収まらない場合の扱いについて指定する。
+    // 今回の場合は、画像がborder-radiusで丸くした部分からはみ出る問題を解消するためにhiddenを指定する。
+    overflow: hidden;
     box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
 
     // transitionプロパティは継承される
@@ -35,7 +37,7 @@
       transform: rotateY(-180deg);
 
       // グラデーションの背景をしたい時は画像を使っていなくてもbackground-imageを使用する
-      // ちなみに画像を使用する時はlinear-gradientの第４引数に画像のpathを渡す
+      // ちなみに画像を使用する時はbackground-imageの第2引数に画像のpathを渡す
       &--1 {
         background-image: linear-gradient(
           to right bottom,
@@ -62,6 +64,7 @@
     }
   }
 
+  // 以下のhover部分は回転後の状態
   // card:hover .card__side <-- .card:hoverの子(孫)要素の.card__sideにプロパティの影響を与える
   &:hover &__side--front {
     transform: rotateY(180deg);
@@ -69,5 +72,127 @@
 
   &:hover &__side--back {
     transform: rotateY(0);
+  }
+
+  // FRONT STYLING
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+
+    background-blend-mode: screen;
+    // ↑これを使わずにlinear-gradientの色の部分にrgba指定で透明度のある色を渡すことで似たようが画像エフェクトを実装できる(header画像にはそうしている)
+    // がこっちの方が綺麗
+
+    // polygonのY軸も一番上が0
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+
+    &--1 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        ),
+        url(../img/nat-5.jpg);
+    }
+    &--2 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        ),
+        url(../img/nat-6.jpg);
+    }
+    &--3 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        ),
+        url(../img/nat-7.jpg);
+    }
+  }
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: $color-white;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    // textを右揃えにしたい
+    text-align: right;
+
+    width: 75%;
+  }
+
+  &__heading-span {
+    padding: 1rem 1.5rem;
+    // ここが意図した挙動にならない
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.85),
+        rgba($color-secondary-dark, 0.85)
+      );
+    }
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.85),
+        rgba($color-primary-dark, 0.85)
+      );
+    }
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-light, 0.85),
+        rgba($color-tertiary-dark, 0.85)
+      );
+    }
+  }
+  &__details {
+    padding: 3rem;
+    ul {
+      margin: 0 auto;
+      list-style: none;
+      width: 80%;
+      li {
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 1rem;
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+  &__cta {
+    // ブロック要素の上下左右の中央寄せのイディオム
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    // cta内の子要素かつインライン要素のもの(今回はaタグ)を中央寄せするため
+    text-align: center;
+  }
+
+  &__price-box {
+    text-align: center;
+    color: $color-white;
+    margin-bottom: 8rem;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 100;
   }
 }

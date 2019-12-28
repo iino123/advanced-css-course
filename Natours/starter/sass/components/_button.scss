@@ -62,6 +62,16 @@
     }
   }
 
+  &--green {
+    background-color: $color-primary;
+    color: $color-white;
+
+    // これは下の&::afterの設定に含めても良いが、今回は色に関連するプロパティはこのクラスで指定する
+    &::after {
+      background-color: $color-primary;
+    }
+  }
+
   /* ボタンがシュリンってなるエフェクトの初期状態 */
   /* 
   NOTE:

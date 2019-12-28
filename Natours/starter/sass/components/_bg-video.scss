@@ -1,0 +1,21 @@
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  // 考察：ここで高さを指定しないと、高さ=子要素の高さになると思う。そうすると、videoがsection全体を囲わなくなる。
+  // したがって、ここはheight:100%;(=親要素(section)の高さを設定)することで、それを回避する。
+  // 同様の理由でwidthも100%とする。(今回はwidth:100%;)は見た目に影響を与えない
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.25;
+  // はみ出したら切り取る
+  overflow: hidden;
+
+  &__content {
+    // ここが実際にvideoが入る領域。ここで高さと幅を指定しないとめちゃはみ出たりする。
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}

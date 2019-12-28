@@ -1,0 +1,79 @@
+.story {
+  // 背景色を透明にしたいからってopacityを指定すると子要素まで透けちゃうので、rgbaを使う
+  background-color: rgba($color-white, 0.7);
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  border-radius: 3px;
+  padding: 6rem;
+  // __shapeのtransform: translateX(-3rem)によって、左のpaddingが小さくなるのでこれで従来のpaddingになるように調整する
+  padding-left: 9rem;
+  font-size: $default-font-size;
+
+  transform: skewX(-12deg);
+  // 現状は1つの要素にtransformプロパティを1つ以上定義できない。-> __shapeには直で記述する
+  & > * {
+    transform: skewX(12deg);
+  }
+
+  &__shape {
+    width: 15rem;
+    height: 15rem;
+    // floatを定義することで周囲の文字が図形を取り囲むようにできる(float area を定義する仕様)
+    float: left;
+    // 文字の回り込みに関するプロパティ
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    // 実際の図形の切り取りに関するプロパティ
+    clip-path: circle(50% at 50% 50%);
+    // 図形と文字が近いので図形を少し左にズラす
+    transform: translateX(-3rem) skewX(12deg);
+    //  ↑現状は1つの要素にtransformプロパティを1つ以上定義できないので、skew(12deg)もここで一気に記述
+
+    // 子要素のため
+    position: relative;
+
+    // アニメーションの際に微妙に変な映り込みがあるのを防ぐやつ(なぜこれで直るかは謎)
+    // 参考: https://myscreate.com/transform-bugs/
+    overflow: hidden;
+  }
+
+  &__img {
+    // NOTE: width: 100%; これだと元々の画像が横長なので高さが足りなくなって変になる
+    height: 100%;
+    // 画像がズレているのでtranslateXで修正
+    transform: translateX(-4rem) scale(1.4);
+    transition: all 0.5s;
+    // backface-visibility: hidden;
+  }
+
+  &__caption {
+    // この要素自体を親要素の中央に配置する
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    // animationの初期値とするために20%とopacity:0
+    transform: translate(-50%, 20%);
+    opacity: 0;
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    // この要素の中に記述されているテキストを中央寄せ
+    text-align: center;
+    transition: all 0.5s;
+    // このアニメーションの際に微妙にブレたりする時はbackface-visibility: hidden;をつけるとよかったり(?)
+    backface-visibility: hidden;
+  }
+
+  // TODO: 画像部分をhoverしたらこのアニメーションを起こしたい場合にどうすれば良いか？
+  // 画像上に名前が浮かび上がるアニメーション
+  &:hover &__caption {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  // 画像自体の加工を行うアニメーション
+  &:hover &__img {
+    transform: translateX(-4rem) scale(1);
+    filter: blur(3px) brightness(80%);
+  }
+}
